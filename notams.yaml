@@ -1,0 +1,3 @@
+# Add a line below for each notams of interest matching the format:
+#     - {id: 10/0002, lat: 352119N, long: 1163405W, rad: 270NM}
+- {id: 10/0002, lat: 352119N, long: 1163405W, rad: 270NM}
