@@ -1,3 +1,7 @@
 pyyaml
 docopt
 pillow
+Flask
+Flask-SQLAlchemy
+ipython
+pytz
