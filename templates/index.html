@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>GPS NOTAM MAP</h1>
+    <p class="lead">Visualize the area of impact for GPS NOTAMS.</p>
+
+        <form method="post">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-3"><b>DISPLAYING NOTAMS FOR</b></div>
+            <input name="day" class="col-12 col-sm-3" value="{{day}}" placeholder="YYYY-MM-DD"></input>
+            <div class="col-12 col-sm-3">
+            <button name="btn" type="sumbit" class="btn btn-sm btn-primary" value="date">UPD</button>
+            <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="today">TODAY</button>
+            </div>
+            <div class="col-12 col-sm-2 offset-sm-1">
+            <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="plot">PLOT</button>
+            </div>
+        </form>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-2"><b>IDENT</b></div>
+            <div class="col-12 col-sm-2"><b>LAT</b></div>
+            <div class="col-12 col-sm-2"><b>LON</b></div>
+            <div class="col-12 col-sm-2"><b>RAD</b></div>
+        </div>
+
+        {% if notam_list %}
+            {% for notam in notam_list %}
+                {% include 'notam.html' %}
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class=col-12>
+                    &lsaquo; No NOTAMS found &rsaquo;
+                </div>
+            </div>
+        {% endif %}
+
+        <form method="post">
+        <input name="day" value="{{day}}" hidden></input>
+        <div class="row align-items-center">
+            <input name="ident" class="col-12 col-sm-2" placeholder="ident"></input>
+            <input name="lat" class="col-12 col-sm-2" placeholder="lat"></input>
+            <input name="lon" class="col-12 col-sm-2" placeholder="lon"></input>
+            <input name="rad" class="col-12 col-sm-2" placeholder="rad"></input>
+            <div class="col-12 col-sm-2">
+            <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="add">ADD</button>
+            </div>
+        </div>
+        </form>
+
+    </div>
+
+    <p></p>
+    <div class="container-fluid">
+        <!-- append a new number to the query string at the end of the image file so that browsers don't cache the image -->
+        <img src="/static/images/{{day}}_notams.png?{{utc_timestamp}}" width="100%" height="auto" alt="">
+    </div>
+{% endblock %}
+
+
+
+{% block footer %}
+<div class="container">
+    Page generated {{utc_timestamp}}.
+</div>
+
+<!-- jQuery first, then Tether, then Bootstrap JS. -->
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+{% endblock %}

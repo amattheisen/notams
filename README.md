@@ -25,3 +25,5 @@ Install dependencies
 
 Profit
 ------
+    source activate notams
+    python app.py
