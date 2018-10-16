@@ -1,0 +1,17 @@
+<form method="post">
+<input name="day" value="{{day}}" hidden></input>
+<input name="orig_ident" value="{{notam['ident']}}" hidden></input>
+<input name="orig_lat" value="{{notam['lat']}}" hidden></input>
+<input name="orig_lon" value="{{notam['lon']}}" hidden></input>
+<input name="orig_rad" value="{{notam['rad']}}" hidden></input>
+<div class="row align-items-center">
+    <input name="ident" class="col-12 col-sm-2" value="{{notam['ident']}}"></input>
+    <input name="lat" class="col-12 col-sm-2" value="{{notam['lat']}}"></input>
+    <input name="lon" class="col-12 col-sm-2" value="{{notam['lon']}}"></input>
+    <input name="rad" class="col-12 col-sm-2" value="{{notam['rad']}}"></input>
+    <div class="col-12 col-sm-4">
+    <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="upd">UPD</button>
+    <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="del">DEL</button>
+    </div>
+</div>
+</form>
