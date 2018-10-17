@@ -1,13 +1,19 @@
 {% extends "base.html" %}
+
+{% block headerextras %}
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <h1>GPS NOTAM MAP</h1>
     <p class="lead">Visualize the area of impact for GPS NOTAMS.</p>
 
-        <form method="post">
+        <form class="needs-validation" method="post">
         <div class="row align-items-center">
             <div class="col-12 col-sm-3"><b>DISPLAYING NOTAMS FOR</b></div>
-            <input name="day" class="col-12 col-sm-3" value="{{day}}" placeholder="YYYY-MM-DD"></input>
+            <div class="col-12 col-sm-3">
+                <input type="text" name="day" class="form control" value="{{day}}" placeholder="YYYY-MM-DD"></input>
+            </div>
             <div class="col-12 col-sm-3">
             <button name="btn" type="sumbit" class="btn btn-sm btn-primary" value="date">UPD</button>
             <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="today">TODAY</button>
@@ -37,15 +43,37 @@
             </div>
         {% endif %}
 
-        <form method="post">
+        <p></p>
+        Add NOTAM
+        <form class="needs-validation" method="post" novalidate>
         <input name="day" value="{{day}}" hidden></input>
         <div class="row align-items-center">
-            <input name="ident" class="col-12 col-sm-2" placeholder="ident"></input>
-            <input name="lat" class="col-12 col-sm-2" placeholder="lat"></input>
-            <input name="lon" class="col-12 col-sm-2" placeholder="lon"></input>
-            <input name="rad" class="col-12 col-sm-2" placeholder="rad"></input>
             <div class="col-12 col-sm-2">
-            <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="add">ADD</button>
+                <input name="ident" class="form-control" placeholder="ident" required>
+                <div class="invalid-feedback">
+                  Identity is required.
+                </div>
+            </div>
+            <div class="col-12 col-sm-2">
+                <input name="lat" class="form-control" placeholder="lat" pattern="[0-9]{6}[NS]" oninput="check_lat(this)" required>
+                <div class="invalid-feedback">
+                  Valid Latitude matching [0-9]{6}[NS] is required.
+                </div>
+            </div>
+            <div class="col-12 col-sm-2">
+                <input name="lon" class="form-control" placeholder="lon" pattern="[0-9]{6,7}[EW]" oninput="check_lon(this)" required>
+                <div class="invalid-feedback">
+                  Valid longitude matching [0-9]{6,7}[EW] is required.
+                </div>
+            </div>
+            <div class="col-12 col-sm-2">
+                <input name="rad" class="form-control" placeholder="rad" pattern="[0-9]{1,5}(NM)*" oninput="check_rad(this)" required>
+                <div class="invalid-feedback">
+                  Valid radius matching [0-9]{1,5}(NM)* is required.
+                </div>
+            </div>
+            <div class="col-12 col-sm-2">
+                <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="add">ADD</button>
             </div>
         </div>
         </form>
@@ -55,8 +83,11 @@
     <p></p>
     <div class="container-fluid">
         <!-- append a new number to the query string at the end of the image file so that browsers don't cache the image -->
-        <img src="/static/images/{{day}}_notams.png?{{utc_timestamp}}" width="100%" height="auto" alt="">
+        <!-- load the blank map if a plot has not yet been generated for this day -->
+        <!-- expand image to the width of this container -->
+        <img src="/static/images/{{day}}_notams.png?{{utc_timestamp}}" onerror="if (this.src != '/static/images/map.png') this.src = 'static/images/map.png';" width="100%" height="auto" alt="">
     </div>
+
 {% endblock %}
 
 
@@ -66,9 +97,4 @@
     Page generated {{utc_timestamp}}.<br>
     <a href="https://www.fcc.gov/media/radio/dms-decimal">Tool to Convert Degrees/Minutes/Seconds to|from Decimal Degrees</a>
 </div>
-
-<!-- jQuery first, then Tether, then Bootstrap JS. -->
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 {% endblock %}

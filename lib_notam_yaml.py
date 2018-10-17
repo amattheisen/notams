@@ -151,39 +151,44 @@ def import_notams(yaml_file):
         raw_notams = yaml.load(open(yaml_file, 'r'))
     except FileNotFoundError:
         return notam_list  # no notams
-
+    if not raw_notams:
+        return notam_list  # no notams in file
     # validate raw_notams and populate notams dictionary
     for ii, notam in enumerate(raw_notams):
         # check this notam for required keys
+        valid_notam = True
         for key in NOTAM_KEYS:
             if key not in notam:
                 errors.append(MISSING_REQUIRED_KEY.format(i_th=add_number_suffix(ii), key=key))
+                valid_notam = False 
         # validate ident
         ident = validate_ident(notam['ident'])
         if ident is None:
             errors.append(INVALID_IDENT.format(i_th=add_number_suffix(ii), ident=notam['ident']))
-        #notams['idents'].append(notam['ident'])
+            valid_notam = False 
         # validate latitude
         latitude = validate_lat(lat=notam['lat'].upper())
         if latitude is None:
             errors.append(INVALID_LATITUDE.format(i_th=add_number_suffix(ii), latitude=notam['lat']))
+            valid_notam = False 
         # validate longitude
         longitude = validate_lon(lon=notam['lon'].upper())
         if longitude is None:
             errors.append(INVALID_LONGITUDE.format(i_th=add_number_suffix(ii), longitude=notam['lon']))
+            valid_notam = False 
         # validate radius
         radius = validate_radius(r=notam['rad'].upper())
         if radius is None:
             errors.append(INVALID_RADIUS.format(i_th=add_number_suffix(ii), radius=notam['rad']))
-        if not errors:
+            valid_notam = False 
+        if valid_notam:
             notam_list.append(notam)
 
     if errors:
-        # print error messages and empty notam list
+        # error(s) encountered loading|validating yaml file.
         print('Errors detected:')
         for error in errors:
             print('   ', error)
-        return None  # error(s) encountered loading|validating yaml file.
     return notam_list
 
 
