@@ -2,7 +2,6 @@
 
 {% block headerextras %}
 {% endblock %}
-
 {% block content %}
 <div class="container">
     <h1>GPS NOTAM MAP</h1>
@@ -18,7 +17,7 @@
             <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="today">TODAY</button>
             </div>
             <div class="col-4 col-sm-2 col-md-2 offset-md-1">
-            <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="plot">PLOT</button>
+            <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="plot" id="plot">PLOT</button>
             </div>
         </form>
         </div>
@@ -105,26 +104,33 @@
         <!-- expand image to the width of this container -->
         <img src="/static/images/{{day}}_notams.png?{{utc_timestamp}}" onerror="if (this.src != '/static/images/map.png') this.src = 'static/images/map.png';" width="100%" height="auto" alt="">
     </div>
-
 {% endblock %}
 
 
-
 {% block footer %}
-<div class="container">
-    Page generated {{utc_timestamp}}.<br>
-    <div class="panel-group">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="panel-title">
-                    <a data-toggle="collapse" href="#collapse1">Instructions</a>
+    <div class="container">
+        Page generated {{utc_timestamp}}.<br>
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">Instructions</a>
+                    </div>
+                </div>
+                <div id="collapse1" class="panel-collapse collapse">
+                    <div class="panel-body">This tool does not automatically download notams for you. Select a day and click 'upd', then enter a GPS NOTAM maually and click 'add', then click 'plot' to see NOTAMs on the map.</div>
                 </div>
             </div>
-            <div id="collapse1" class="panel-collapse collapse">
-                <div class="panel-body">This tool does not automatically download notams for you. Select a day and click 'upd', then enter a GPS NOTAM maually and click 'add', then click 'plot' to see NOTAMs on the map.</div>
-            </div>
         </div>
+        <a href="https://www.fcc.gov/media/radio/dms-decimal">Tool to Convert Degrees/Minutes/Seconds to|from Decimal Degrees</a>
     </div>
-    <a href="https://www.fcc.gov/media/radio/dms-decimal">Tool to Convert Degrees/Minutes/Seconds to|from Decimal Degrees</a>
-</div>
+
+    <!-- transform plot button text while plotting -->
+    <script>
+    $(document).ready(function(){
+        $('#plot').click(function() {
+            $(this).text('PLOTTING...');
+        })
+    });
+    </script>
 {% endblock %}

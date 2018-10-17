@@ -22,6 +22,8 @@ Options:
 import datetime
 from docopt import docopt
 import math
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.patheffects as PathEffects
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
@@ -29,7 +31,7 @@ import numpy as np
 import os
 import pytz
 import sys
-
+import gc
 
 # Custom Imports
 from lib_notam_yaml import import_notams, validate_ident, validate_lat, validate_lon, validate_radius
@@ -138,7 +140,9 @@ def make_plot(notams, day, outfile, use_marble=False):
     plt.title(day + ' NOTAMs')
     print('    Saving...')
     fig.savefig(os.path.join(PLOT_DIR, outfile), dpi=300)
-    plt.close("all")
+    plt.clf()
+    plt.close()
+    gc.collect()
 
 
 def compute_circles(notams):
