@@ -7,29 +7,29 @@
 <div class="container">
     <h1>GPS NOTAM MAP</h1>
     <p class="lead">Visualize the area of impact for GPS NOTAMS.</p>
-
         <form class="needs-validation" method="post">
         <div class="row align-items-center">
-            <div class="col-12 col-sm-3"><b>DISPLAYING NOTAMS FOR</b></div>
-            <div class="col-12 col-sm-3">
-                <input type="text" name="day" class="form control" value="{{day}}" placeholder="YYYY-MM-DD"></input>
+            <div class="col-12 col-sm-3 col-md-3"><h4>SELECTED DAY</h4></div>
+            <div class="col-8 offset-4 offset-sm-0 col-sm-4 col-md-3">
+                <input type="text" name="day" class="form-control" value="{{day}}" placeholder="YYYY-MM-DD"></input>
             </div>
-            <div class="col-12 col-sm-3">
+            <div class="col-4 offset-4 offset-sm-0 col-sm-3 col-md-3">
             <button name="btn" type="sumbit" class="btn btn-sm btn-primary" value="date">UPD</button>
             <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="today">TODAY</button>
             </div>
-            <div class="col-12 col-sm-2 offset-sm-1">
+            <div class="col-4 col-sm-2 col-md-2 offset-md-1">
             <button name="btn" type="sumbit" class="btn btn-sm btn-outline-secondary" value="plot">PLOT</button>
             </div>
         </form>
         </div>
-
+        <div class="col-12"><h4>NOTAMs</h4></div>
         <div class="row align-items-center">
-            <div class="col-12 col-sm-2"><b>IDENT</b></div>
-            <div class="col-12 col-sm-2"><b>LAT</b></div>
-            <div class="col-12 col-sm-2"><b>LON</b></div>
-            <div class="col-12 col-sm-2"><b>RAD</b></div>
+            <div class="d-none d-sm-block col-sm-2"><b>IDENT</b></div>
+            <div class="d-none d-sm-block col-sm-2"><b>LAT</b></div>
+            <div class="d-none d-sm-block col-sm-2"><b>LON</b></div>
+            <div class="d-none d-sm-block col-sm-2"><b>RAD</b></div>
         </div>
+        <div class="col-12 d-block d-sm-none"><br></div>
 
         {% if notam_list %}
             {% for notam in notam_list %}
@@ -44,29 +44,33 @@
         {% endif %}
 
         <p></p>
-        Add NOTAM
+        <div class="col-12"><h4>Add NOTAM</h4></div>
         <form class="needs-validation" method="post" novalidate>
         <input name="day" value="{{day}}" hidden></input>
         <div class="row align-items-center">
-            <div class="col-12 col-sm-2">
+            <label for="ident" class="col-4 d-block d-sm-none">ident</label>
+            <div class="col-8 col-sm-2">
                 <input name="ident" class="form-control" placeholder="ident" required>
                 <div class="invalid-feedback">
                   Identity is required.
                 </div>
             </div>
-            <div class="col-12 col-sm-2">
+            <label for="lat" class="col-4 d-block d-sm-none">lat</label>
+            <div class="col-8 col-sm-2">
                 <input name="lat" class="form-control" placeholder="lat" pattern="[0-9]{6}[NS]" oninput="check_lat(this)" required>
                 <div class="invalid-feedback">
                   Valid Latitude matching [0-9]{6}[NS] is required.
                 </div>
             </div>
-            <div class="col-12 col-sm-2">
+            <label for="lon" class="col-4 d-block d-sm-none">lon</label>
+            <div class="col-8 col-sm-2">
                 <input name="lon" class="form-control" placeholder="lon" pattern="[0-9]{6,7}[EW]" oninput="check_lon(this)" required>
                 <div class="invalid-feedback">
                   Valid longitude matching [0-9]{6,7}[EW] is required.
                 </div>
             </div>
-            <div class="col-12 col-sm-2">
+            <label for="rad" class="col-4 d-block d-sm-none">rad</label>
+            <div class="col-8 col-sm-2">
                 <input name="rad" class="form-control" placeholder="rad" pattern="[0-9]{1,5}(NM)*" oninput="check_rad(this)" required>
                 <div class="invalid-feedback">
                   Valid radius matching [0-9]{1,5}(NM)* is required.
@@ -95,6 +99,18 @@
 {% block footer %}
 <div class="container">
     Page generated {{utc_timestamp}}.<br>
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1">Instructions</a>
+                </div>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <div class="panel-body">This tool does not automatically download notams for you. Select a day and click 'upd', then enter a GPS NOTAM maually and click 'add', then click 'plot' to see NOTAMs on the map.</div>
+            </div>
+        </div>
+    </div>
     <a href="https://www.fcc.gov/media/radio/dms-decimal">Tool to Convert Degrees/Minutes/Seconds to|from Decimal Degrees</a>
 </div>
 {% endblock %}

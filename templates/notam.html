@@ -5,13 +5,18 @@
 <input name="orig_lon" value="{{notam['lon']}}" hidden></input>
 <input name="orig_rad" value="{{notam['rad']}}" hidden></input>
 <div class="row align-items-center">
-    <input name="ident" class="col-12 col-sm-2" value="{{notam['ident']}}"></input>
-    <input name="lat" class="col-12 col-sm-2" value="{{notam['lat']}}"></input>
-    <input name="lon" class="col-12 col-sm-2" value="{{notam['lon']}}"></input>
-    <input name="rad" class="col-12 col-sm-2" value="{{notam['rad']}}"></input>
+    <label for="ident" class="col-4 d-block d-sm-none">ident</label>
+    <input name="ident" class="col-8 col-sm-2" value="{{notam['ident']}}"></input>
+    <label for="lat" class="col-4 d-block d-sm-none">lat</label>
+    <input name="lat" class="col-8 col-sm-2" value="{{notam['lat']}}"></input>
+    <label for="lon" class="col-4 d-block d-sm-none">lon</label>
+    <input name="lon" class="col-8 col-sm-2" value="{{notam['lon']}}"></input>
+    <label for="rad" class="col-4 d-block d-sm-none">rad</label>
+    <input name="rad" class="col-8 col-sm-2" value="{{notam['rad']}}"></input>
     <div class="col-12 col-sm-4">
-    <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="upd">UPD</button>
-    <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="del">DEL</button>
+        <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="upd">UPD</button>
+        <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="del">DEL</button>
     </div>
+    <div class="col-12 d-block d-sm-none"><br></div>
 </div>
 </form>
