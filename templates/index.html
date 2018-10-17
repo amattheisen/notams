@@ -5,7 +5,12 @@
 {% block content %}
 <div class="container">
     <h1>GPS NOTAM MAP</h1>
-    <p class="lead">Visualize the area of impact for GPS NOTAMS.</p>
+    <p class="lead">Visualize the area of impact for GPS NOTAMS.
+        <details>
+            <summary>Instructions</summary>
+            <p>This tool does not automatically download notams for you. Select a day and click 'upd', enter a GPS NOTAM for that day manually and click 'add', then click 'plot' and wait 20 seconds to see NOTAMs on the map.</p>
+        </details>
+    </p>
         <form class="form-group needs-validation" method="post">
         <div class="row align-items-center">
             <div class="col-12 col-sm-3 col-md-3"><h4>SELECTED DAY</h4></div>
@@ -110,19 +115,7 @@
 {% block footer %}
     <div class="container">
         Page generated {{utc_timestamp}}.<br>
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="panel-title">
-                        <a data-toggle="collapse" href="#collapse1">Instructions</a>
-                    </div>
-                </div>
-                <div id="collapse1" class="panel-collapse collapse">
-                    <div class="panel-body">This tool does not automatically download notams for you. Select a day and click 'upd', then enter a GPS NOTAM maually and click 'add', then click 'plot' to see NOTAMs on the map.</div>
-                </div>
-            </div>
-        </div>
-        <a href="https://www.fcc.gov/media/radio/dms-decimal">Tool to Convert Degrees/Minutes/Seconds to|from Decimal Degrees</a>
+        <a href="https://www.fcc.gov/media/radio/dms-decimal">Convert Degrees/Minutes/Seconds to|from Decimal Degrees</a>
     </div>
 
     <!-- transform plot button text while plotting -->
