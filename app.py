@@ -79,7 +79,9 @@ def home_post():
         day = request.form['day']
         print("Plotting", day)
         # TODO: how to change button from plot to plotting?
+        # TODO: how to run the plot in the background
         options = plot_notams.build_options(day=day)
+        options['--infile'] = os.path.join(DATA_DIR, options['--infile'])
         plot_notams.main(options)
         # TODO: how to change button from plotting back to plot and deemphasize?
         return home(day)

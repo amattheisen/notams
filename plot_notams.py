@@ -57,6 +57,7 @@ def main(options):
     notams['circles'] = compute_circles(notams)
     print("Generating Plot %s ..." % options['--outfile'])
     make_plot(notams=notams,
+              day=options['--date'],
               outfile=options['--outfile'],
               use_marble=options['--marble'])
     print("Success")
@@ -80,7 +81,7 @@ def create_plot_dictionary(notam_list):
     return notams
 
 
-def make_plot(notams, outfile, use_marble=False):
+def make_plot(notams, day, outfile, use_marble=False):
     """
     Plot NOTAMs.
 
@@ -134,7 +135,7 @@ def make_plot(notams, outfile, use_marble=False):
                 linewidth=3, foreground="black")],
             zorder=5)
 
-    plt.title('NOTAM Footprints')
+    plt.title(day + ' NOTAMs')
     print('    Saving...')
     fig.savefig(os.path.join(PLOT_DIR, outfile), dpi=300)
     plt.close("all")
