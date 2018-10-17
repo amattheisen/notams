@@ -177,7 +177,7 @@ def import_notams(yaml_file):
             errors.append(INVALID_LONGITUDE.format(i_th=add_number_suffix(ii), longitude=notam['lon']))
             valid_notam = False 
         # validate radius
-        radius = validate_radius(r=notam['rad'].upper())
+        radius = validate_radius(r=str(notam['rad']).upper())
         if radius is None:
             errors.append(INVALID_RADIUS.format(i_th=add_number_suffix(ii), radius=notam['rad']))
             valid_notam = False 

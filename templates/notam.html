@@ -1,22 +1,43 @@
 <form class="needs-validation" method="post" novalidate>
-<input name="day" value="{{day}}" hidden></input>
-<input name="orig_ident" value="{{notam['ident']}}" hidden></input>
-<input name="orig_lat" value="{{notam['lat']}}" hidden></input>
-<input name="orig_lon" value="{{notam['lon']}}" hidden></input>
-<input name="orig_rad" value="{{notam['rad']}}" hidden></input>
-<div class="row align-items-center">
-    <label for="ident" class="col-4 d-block d-sm-none">ident</label>
-    <input name="ident" class="col-8 col-sm-2" value="{{notam['ident']}}"></input>
-    <label for="lat" class="col-4 d-block d-sm-none">lat</label>
-    <input name="lat" class="col-8 col-sm-2" value="{{notam['lat']}}"></input>
-    <label for="lon" class="col-4 d-block d-sm-none">lon</label>
-    <input name="lon" class="col-8 col-sm-2" value="{{notam['lon']}}"></input>
-    <label for="rad" class="col-4 d-block d-sm-none">rad</label>
-    <input name="rad" class="col-8 col-sm-2" value="{{notam['rad']}}"></input>
-    <div class="col-12 col-sm-4">
-        <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="upd">UPD</button>
-        <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="del">DEL</button>
+    <input name="day" value="{{day}}" hidden>
+    <input name="orig_ident" value="{{notam['ident']}}" hidden>
+    <input name="orig_lat" value="{{notam['lat']}}" hidden>
+    <input name="orig_lon" value="{{notam['lon']}}" hidden>
+    <input name="orig_rad" value="{{notam['rad']}}" hidden>
+    <div class="form-row align-items-center">
+    
+        <label for="ident" class="col-4 d-block d-sm-none">ident</label>
+        <div class="col-8 col-sm-3 col-md-2">
+            <input name="ident" class="form-control" value="{{notam['ident']}}" required>
+            <div class="invalid-feedback">
+                Identity is required.
+            </div>
+        </div>
+        <label for="lat" class="col-4 d-block d-sm-none">lat</label>
+        <div class="col-8 col-sm-3 col-md-2">
+            <input name="lat" class="form-control" value="{{notam['lat']}}" pattern="[0-9]{6}[NS]" required>
+            <div class="invalid-feedback">
+                Valid Latitude matching [0-9]{6}[NS] is required.
+            </div>
+        </div>
+        <label for="lon" class="col-4 d-block d-sm-none">lon</label>
+        <div class="col-8 col-sm-3 col-md-2">
+            <input name="lon" class="form-control" value="{{notam['lon']}}" pattern="[0-9]{6,7}[EW]" required>
+            <div class="invalid-feedback">
+                Valid longitude matching [0-9]{6,7}[EW] is required.
+            </div>
+        </div>
+        <label for="rad" class="col-4 d-block d-sm-none">rad</label>
+        <div class="col-8 col-sm-2">
+            <input name="rad" class="form-control" value="{{notam['rad']}}" pattern="[0-9]{1,5}(NM)*" required>
+            <div class="invalid-feedback">
+                Valid longitude matching [0-9]{6,7}[EW] is required.
+            </div>
+        </div>
+        <div class="col-12 col-sm-1 col-md-4">
+            <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="upd">UPD</button>
+            <button name="btn" type="submit" class="btn btn-sm btn-outline-secondary" value="del">DEL</button>
+        </div>
+        <div class="col-12 d-block d-md-none"><br></div>
     </div>
-    <div class="col-12 d-block d-sm-none"><br></div>
-</div>
 </form>
