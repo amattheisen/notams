@@ -78,12 +78,9 @@ def home_post():
     elif request.form['btn'] == 'plot':
         day = request.form['day']
         print("Plotting", day)
-        # TODO: how to change button from plot to plotting?
-        # TODO: how to run the plot in the background
+        # TODO: how to run the plot in the background or speed up plotting?
         options = plot_notams.build_options(day=day)
-        options['--infile'] = os.path.join(DATA_DIR, options['--infile'])
-        plot_notams.main(options)
-        # TODO: how to change button from plotting back to plot and deemphasize?
+        plot_notams.main(options=options)
         return home(day)
     elif request.form['btn'] == 'del':
         print("Deleting NOTAM")
@@ -132,4 +129,4 @@ def home_post():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0")

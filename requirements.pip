@@ -5,3 +5,4 @@ Flask
 Flask-SQLAlchemy
 ipython
 pytz
+gunicorn
