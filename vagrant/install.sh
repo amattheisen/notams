@@ -92,13 +92,13 @@ su - ${RUSER} -c "/opt/conda/bin/conda install --name ${TOOL} -c conda-forge --f
 
 echo Preparing SELINUX permissions for gunicorn
 ## ============================================
-mkdir /opt/${TOOL}/static/data || True
+mkdir /opt/${TOOL}/static_notams/data || True
 ## Feed the SE Linux Beast.
 setsebool -P httpd_can_network_connect on
 semanage port -a -t http_port_t -p tcp ${PORT}   # allow httpd to serve tool port
 semanage fcontext -a -t httpd_var_run_t "/opt/${TOOL}/.*\.py"
-semanage fcontext -a -t httpd_sys_rw_content_t "/opt/${TOOL}/static/data"
-semanage fcontext -a -t httpd_sys_rw_content_t "/opt/${TOOL}/static/images"
+semanage fcontext -a -t httpd_sys_rw_content_t "/opt/${TOOL}/static_notams/data"
+semanage fcontext -a -t httpd_sys_rw_content_t "/opt/${TOOL}/static_notams/images"
 restorecon -Rv /opt/${TOOL}
 ## <SE LINUX NOTES>
 ##    semanage fcontext -l | grep /opt/${TOOL}  # list the selinux fcontexts

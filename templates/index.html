@@ -107,7 +107,7 @@
         <!-- append a new number to the query string at the end of the image file so that browsers don't cache the image -->
         <!-- load the blank map if a plot has not yet been generated for this day -->
         <!-- expand image to the width of this container -->
-        <img src="/static/images/{{day}}_notams.png?{{utc_timestamp}}" onerror="if (this.src != '/static/images/map.png') this.src = 'static/images/map.png';" width="100%" height="auto" alt="">
+        <img src="/static_notams/images/{{day}}_notams.png?{{utc_timestamp}}" onerror="if (this.src != '/static_notams/images/map.png') this.src = 'static_notams/images/map.png';" width="100%" height="auto" alt="">
     </div>
 {% endblock %}
 
