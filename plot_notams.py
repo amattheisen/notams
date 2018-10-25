@@ -9,7 +9,7 @@ Options:
   -h --help           Show this screen.
   -d --date DATE      Specify UTC date in ISO format YYYY-MM-DD.  Default is
                       today's UTC date.
-  --init              Regenerate background map.
+  --init              Force regeneration of the background map.
   --basic             Use minimalist map background instead of the default
                       shadedrelief.
   --marble            Use the bluemarble map background instead of the default
@@ -145,7 +145,6 @@ def warp_map_image(map_type):
 
     """
     infile = os.path.join(*PLOT_DIR, '%s_map.png' % map_type)
-
     fig = plt.figure(frameon=False)
     left = 0.0
     bottom = 0.05
@@ -154,7 +153,11 @@ def warp_map_image(map_type):
     ax = fig.add_axes([left, bottom, width, height])
     print('    Creating Basemap...')
     map = Basemap(projection='ortho', lat_0=45, lon_0=-100, resolution='l', ax=ax)
-    map.warpimage(infile)
+    try:
+        map.warpimage(infile)
+    except FileNotFoundError:
+        prepare_background(map_type)
+        map.warpimage(infile)
     return fig, map
 
 
@@ -185,7 +188,7 @@ def make_plot(notams, day, outfile, map_type):
             va='center', color='white',
             path_effects=[PathEffects.withStroke(
                 linewidth=3, foreground="black")],
-            zorder=10)
+            zorder=20)
     plt.title(day + ' NOTAMs')
     print('    Saving...')
     fig.savefig(outfile, dpi=300)
