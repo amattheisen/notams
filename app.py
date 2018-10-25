@@ -46,7 +46,7 @@ import plot_notams
 
 
 # Constants
-DATA_DIR = "static/data/"
+DATA_DIR = ['static', 'data']
 
 
 # Setup
@@ -58,7 +58,7 @@ app = Flask(__name__)
 def home(day=None):
     if day is None:
         day = plot_notams.utc_today()
-    input_file = os.path.join(DATA_DIR, '_'.join([day, 'notams.yaml']))
+    input_file = os.path.join(*DATA_DIR, '_'.join([day, 'notams.yaml']))
     notam_list = lny.import_notams(yaml_file=input_file)
     # TODO: how to get plot emphasis?
     return render_template("index.html",
@@ -85,7 +85,7 @@ def home_post():
     elif request.form['btn'] == 'del':
         print("Deleting NOTAM")
         day = request.form['day']
-        yaml_file = os.path.join(DATA_DIR, '_'.join([day, 'notams.yaml']))
+        yaml_file = os.path.join(*DATA_DIR, '_'.join([day, 'notams.yaml']))
         kwargs = {'yaml_file': yaml_file,
                   'ident': request.form['ident'],
                   'lat': request.form['lat'],
@@ -97,7 +97,7 @@ def home_post():
     elif request.form['btn'] == 'upd':
         print("Updating NOTAM")
         day = request.form['day']
-        yaml_file = os.path.join(DATA_DIR, '_'.join([day, 'notams.yaml']))
+        yaml_file = os.path.join(*DATA_DIR, '_'.join([day, 'notams.yaml']))
         kwargs = {'yaml_file': yaml_file,
                   'orig_ident': request.form['orig_ident'],
                   'orig_lat': request.form['orig_lat'],
@@ -114,7 +114,7 @@ def home_post():
         print("Adding NOTAM")
         day = request.form['day']
         print("Captured Day")
-        yaml_file = os.path.join(DATA_DIR, '_'.join([day, 'notams.yaml']))
+        yaml_file = os.path.join(*DATA_DIR, '_'.join([day, 'notams.yaml']))
         kwargs = {'yaml_file': yaml_file,
                   'ident': request.form['ident'],
                   'lat': request.form['lat'],

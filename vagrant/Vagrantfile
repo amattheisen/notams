@@ -1,0 +1,75 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  # config.vm.box = "base"
+  config.vm.box = "centos/7"
+  config.vm.define "notamsdev" do |notamsdev|
+  end
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # NOTE: This will enable public access to the opened port
+  # Forward tcstool web port
+  config.vm.network "forwarded_port", guest: 80, host: 8091
+  config.vm.network "forwarded_port", guest: 22, host: 2291
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine and only allow access
+  # via 127.0.0.1 to disable public access
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.36.91", auto_config: "true"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Virtualbox specific customizations
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory and CPUs for the VM:
+    vb.memory = "1024"
+    vb.cpus = "1"
+  end
+ 
+  config.vm.hostname = "notamsdev"
+  config.vm.post_up_message = "notamsdev VM is running!\nConnect with `ssh notams@192.168.36.91` or ssh -p 2291 notams@localhost\nview tool at http://192.168.36.91 or at http://localhost:8091/"
+
+  # copy over local git repos
+  config.vm.provision "file", source: "../", destination: "/tmp/notams"
+  # copy over local .gitconfig
+  config.vm.provision "file", source: "~/.gitconfig", destination: "/tmp/.gitconfig"
+  # copy over local public ssh key
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "/tmp/host_id_rsa.pub"
+  # For those VIMmers out there
+  config.vm.provision "file", source: "~/.vimrc", destination: "/tmp/.vimrc"
+  config.vm.provision "file", source: "~/.vim", destination: "/tmp/.vim"
+  # copy over install scripts
+  config.vm.provision "file", source: "dev_install.sh", destination: "/tmp/dev_install.sh"
+  config.vm.provision "file", source: "install.sh", destination: "/tmp/install.sh"
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  notams_version = ENV['NOTAMS_RELEASE'].nil? ? '1.0.0' : ENV['NOTAMS_RELEASE']
+  config.vm.provision "shell", inline: "cd /tmp; NOTAMS_RELEASE=#{notams_version}; sudo ./dev_install.sh"
+end

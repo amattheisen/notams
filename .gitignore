@@ -1,2 +1,6 @@
 *.png
+*.yaml
 *.swp
+vagrant/.vagrant
+.DS_Store
+__pycache__

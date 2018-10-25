@@ -27,3 +27,7 @@ Profit
 ------
     source activate notams
     python app.py
+
+Centos Vagrant Setup
+====================
+see [vagrant/README.md](/vagrant/README.md).
