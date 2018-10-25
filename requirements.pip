@@ -7,3 +7,4 @@ ipython
 pytz
 gunicorn
 grip
+matplotlib==3.0.0

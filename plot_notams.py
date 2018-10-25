@@ -106,7 +106,7 @@ def prepare_background(map_type):
     outfile = os.path.join(*PLOT_DIR, '%s_map.png' % map_type)
 
     print("Generating Background Map %s ..." % outfile)
-    fig = plt.figure()
+    fig = plt.figure(1)
     left = 0.0
     bottom = 0.0
     width = 1.0
@@ -135,7 +135,9 @@ def prepare_background(map_type):
     print('    Saving...')
     ax.axis('off')
     fig.savefig(outfile, frameon=False, bbox_inches='tight', pad_inches=0, dpi=600)
-    return fig, map
+    plt.clf()
+    plt.close()
+    gc.collect()
 
 
 def warp_map_image(map_type):
@@ -145,7 +147,7 @@ def warp_map_image(map_type):
 
     """
     infile = os.path.join(*PLOT_DIR, '%s_map.png' % map_type)
-    fig = plt.figure(frameon=False)
+    fig = plt.figure(2, frameon=False)
     left = 0.0
     bottom = 0.05
     width = 1.0
