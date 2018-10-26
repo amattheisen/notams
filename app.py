@@ -37,7 +37,8 @@ Requirements
 """
 # Stantard Imports
 import datetime
-from flask import Flask, render_template, request
+#from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 import os
 
 # Custom Imports
@@ -50,10 +51,15 @@ DATA_DIR = ['static_notams', 'data']
 
 
 # Setup
-app = Flask(__name__)
-
+#app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 # Views 
+@app.route('/static_notams/images/<path:path>')
+def send_image(path):
+    return send_from_directory(os.path.join('static_notams', 'images'), path)
+
+
 @app.route("/", methods=["GET"])
 def home(day=None):
     if day is None:
@@ -78,7 +84,6 @@ def home_post():
     elif request.form['btn'] == 'plot':
         day = request.form['day']
         print("Plotting", day)
-        # TODO: how to run the plot in the background or speed up plotting?
         options = plot_notams.build_options(day=day)
         plot_notams.main(options=options)
         return home(day)
