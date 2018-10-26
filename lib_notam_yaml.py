@@ -8,7 +8,6 @@ validating a notam, and write notams to a yaml dump file.
 # Standard Imports
 import math
 import re
-import sys
 import yaml
 
 
@@ -55,9 +54,31 @@ def add_notam(yaml_file, ident, lat, lon, rad):
     """
     new_notam = {'ident': ident, 'lat': lat, 'lon': lon, 'rad': rad}
     notam_list = import_notams(yaml_file=yaml_file)
-    notam_list.append(new_notam)
-    success = export_notams(yaml_file=yaml_file, notam_list=notam_list)
+
+    # only add unique notams
+    if is_unique(notam=new_notam, notam_list=notam_list):
+        notam_list.append(new_notam)
+        success = export_notams(yaml_file=yaml_file, notam_list=notam_list)
+    else:
+        success = True
     return success    
+
+
+def is_unique(notam, notam_list):
+    """
+    Determine if a notam is unique, or already exists in notam_list.
+
+    """
+    unique = True
+    for notam_from_list in notam_list:
+        same = True
+        for key in NOTAM_KEYS:
+            if notam[key] != notam_from_list[key]:
+                same = False
+        if same:
+            unique = False
+            break
+    return unique
 
 
 def delete_notam(yaml_file, ident, lat, lon, rad):
