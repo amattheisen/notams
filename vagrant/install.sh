@@ -127,3 +127,7 @@ cp /opt/${TOOL}/vagrant/nginx.conf /etc/nginx/nginx.conf
 ln -sf -T /opt/${TOOL}/vagrant/${TOOL}.conf /etc/nginx/conf.d/${TOOL}.conf
 systemctl enable nginx
 systemctl restart nginx
+
+echo Setting up crontab to retrieve notams.
+# =========================================
+su - ${RUSER} -c "crontab -e < /opt/${TOOL}/vagrant/crontab.${RUSER}"
