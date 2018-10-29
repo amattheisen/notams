@@ -47,7 +47,7 @@ import plot_notams
 
 
 # Constants
-DATA_DIR = ['static_notams', 'data']
+DATA_DIR = [os.path.dirname(__file__), 'static_notams', 'data']
 
 
 # Setup

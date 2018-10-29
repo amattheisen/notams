@@ -34,7 +34,7 @@ import plot_notams
 
 
 # Constants
-DATADIR = ['static_notams', 'data']
+DATADIR = [os.path.dirname(__file__), 'static_notams', 'data']
 DATAURL = 'https://pilotweb.nas.faa.gov/PilotWeb/noticesAction.do?queryType=ALLGPS&formatType=DOMESTIC'
 IDENT_SUBSTRING_RE = re.compile('!GPS <b>(?P<ident>[0-9/].*)</b>')
 LATLON_SUBSTRING_RE = re.compile('(?P<latlon>[0-9]{6}[NS][0-9]{6,7}[EW])')

@@ -47,8 +47,8 @@ from lib_notam_yaml import import_notams, validate_ident, validate_lat, validate
 
 # Constants
 NOTAM_PLOT_KEYS = ['idents', 'latitudes', 'longitudes', 'radii']
-DATA_DIR = ['static_notams', 'data']
-PLOT_DIR = ['static_notams', 'images']
+DATA_DIR = [os.path.dirname(__file__), 'static_notams', 'data']
+PLOT_DIR = [os.path.dirname(__file__), 'static_notams', 'images']
 
 
 # Functions
