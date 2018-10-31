@@ -1,3 +1,1 @@
-PROJ_LIB=/opt/conda/envs/notams/share/proj
-
-5 0 * * * /opt/conda/envs/notams/bin/python /opt/notams/retrieve_notams.py > /dev/null 2>&1
+5 0 * * * PROJ_LIB=/opt/conda/envs/notams/share/proj /opt/conda/envs/notams/bin/python /opt/notams/retrieve_notams.py > /dev/null 2>&1
