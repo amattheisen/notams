@@ -38,8 +38,9 @@ Requirements
 # Stantard Imports
 import datetime
 #from flask import Flask, render_template, request
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, jsonify
 import os
+
 
 # Custom Imports
 import lib_notam_yaml as lny
@@ -53,6 +54,7 @@ DATA_DIR = [os.path.dirname(__file__), 'static_notams', 'data']
 # Setup
 #app = Flask(__name__)
 app = Flask(__name__, static_url_path='')
+
 
 # Views 
 @app.route('/static_notams/images/<path:path>')
@@ -131,6 +133,18 @@ def home_post():
     else:
         print('found weird post')
         return home()
+
+
+@app.route("/api/", methods=["GET"])
+def get_api(day=None):
+    all_args = request.args.to_dict()
+    if 'day' in all_args:
+        day = all_args['day']
+    if day is None:
+        day = plot_notams.utc_today()
+    input_file = os.path.join(*DATA_DIR, '_'.join([day, 'notams.yaml']))
+    notam_list = lny.import_notams(yaml_file=input_file)
+    return jsonify({'day': day, 'results': notam_list})
 
 
 if __name__ == '__main__':
