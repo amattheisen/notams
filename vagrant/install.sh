@@ -88,8 +88,6 @@ echo "Installing conda & pip packages."
 # =====================================
 su - ${RUSER} -c "/opt/conda/bin/conda install --name ${TOOL} -c conda-forge --file /opt/${TOOL}/requirements.conda && /opt/conda/envs/${TOOL}/bin/pip install -q -r /opt/${TOOL}/requirements.pip"
 
-
-
 echo Preparing SELINUX permissions for gunicorn
 ## ============================================
 mkdir /opt/${TOOL}/static_notams/data || True
@@ -106,7 +104,11 @@ restorecon -Rv /opt/${TOOL}
 ##    setenforce permissive
 ## </NOTES>
 
-
+echo Configuring ntpd
+# ===================
+rm /etc/ntp.conf
+ln -sf -T /opt/${TOOL}/vagrant/ntp.conf /etc/ntp.conf
+systemctl restart ntpd
 
 echo Setting up Supervisord.
 # ==========================
