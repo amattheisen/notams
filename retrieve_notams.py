@@ -6,10 +6,11 @@ and generate their plots.
 
 Usage:
     retrieve_notams.py -h
-    retrieve_notams.py [--url URL | --use-file FILE] [--plotdir DIR] [--datadir DIR]
+    retrieve_notams.py [--url URL | --use-file FILE] [--plotdir DIR] [--datadir DIR] [--debug]
 
 Options:
   -h --help           Show this screen.
+  --debug             Print verbose debugging output.
   --url URL           Read NOTAMs from a URL.  If not specified, the default URL
                       is the pilotweb site. 
   --use-file FILE     Read NOTAMS from FILE instead of from a url.  The default
@@ -71,7 +72,16 @@ def main(options):
     for line in lines:
         if line.find('!GPS') < 0:
             continue
+        if options['--debug']:
+            print('parsing line:', line)
         key, value = process_html_line(line)
+        if not key and not value:
+            # skip lines that do not contain a notam
+            # e.g. "<span> !GPS <b>11/153</b> (KNMH A0027/18)  GPS NAV PRN 18 OUT OF SERVICE 1811191400-1902162359</span>"
+            continue
+        
+        if options['--debug']:
+            print('found key:', key, 'with value', value)
         if key not in data:
             data[key] = []
         data[key].append(value)
@@ -139,13 +149,29 @@ def process_html_line(line):
         and value is the first ident found.
     """
     idents_found = [m.group('ident') for m in IDENT_SUBSTRING_RE.finditer(line)]
-    first_ident = idents_found[0]
+    try:
+        first_ident = idents_found[0]
+    except IndexError:
+        return None, None
+
     radii_found = [int(m.group('radius')) for m in RADIUS_SUBSTRING_RE.finditer(line)]
-    max_radius = ''.join([str(max(radii_found)), 'NM'])
+    try:
+        max_radius = ''.join([str(max(radii_found)), 'NM'])
+    except ValueError:
+        return None, None
+
     latlons_found = [m.group('latlon') for m in LATLON_SUBSTRING_RE.finditer(line)]
-    first_latlon = latlons_found[0]
+    try:
+        first_latlon = latlons_found[0]
+    except IndexError:
+        return None, None
+
     timespans_found = [m.group('timespan') for m in TIMESPAN_SUBSTRING_RE.finditer(line)]
-    first_timespan = timespans_found[0]
+    try:
+        first_timespan = timespans_found[0]
+    except IndexError:
+        return None, None
+
     key = (max_radius, first_latlon, first_timespan)
     value = first_ident
     return key, value
