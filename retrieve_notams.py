@@ -40,7 +40,7 @@ DATAURL = 'https://pilotweb.nas.faa.gov/PilotWeb/noticesAction.do?queryType=ALLG
 IDENT_SUBSTRING_RE = re.compile('!GPS <b>(?P<ident>[0-9/].*)</b>')
 LATLON_SUBSTRING_RE = re.compile('(?P<latlon>[0-9]{6}[NS][0-9]{6,7}[EW])')
 PLOTDIR = ['static_notams', 'images']
-RADIUS_SUBSTRING_RE = re.compile('(?P<radius>[0-9]{1,4})NM')
+RADIUS_SUBSTRING_RE = re.compile('(?P<radius>[0-9]{1,4}) ?NM')
 TIMESPAN_DATE_FORMAT = "%y%m%d%H%M"
 TIMESPAN_SUBSTRING_RE = re.compile('(?P<timespan>(?P<start>[0-9]{10})-(?P<stop>[0-9]{10}))')
 
