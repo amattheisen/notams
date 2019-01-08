@@ -57,12 +57,12 @@ app = Flask(__name__, static_url_path='')
 
 
 # Views 
-@app.route('/static_notams/images/<path:path>')
+@app.route('/notams/static_notams/images/<path:path>')
 def send_image(path):
     return send_from_directory(os.path.join('static_notams', 'images'), path)
 
 
-@app.route("/", methods=["GET"])
+@app.route("/notams/", methods=["GET"])
 def home(day=None):
     if day is None:
         day = plot_notams.utc_today()
@@ -75,7 +75,7 @@ def home(day=None):
                            utc_timestamp=datetime.datetime.utcnow().isoformat())
 
 
-@app.route("/", methods=["POST"])
+@app.route("/notams/", methods=["POST"])
 def home_post():
     if request.form['btn'] == 'today':
         return home()
@@ -135,7 +135,7 @@ def home_post():
         return home()
 
 
-@app.route("/api/", methods=["GET"])
+@app.route("/notams/api/", methods=["GET"])
 def get_api(day=None):
     all_args = request.args.to_dict()
     if 'day' in all_args:
