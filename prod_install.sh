@@ -56,8 +56,7 @@ ssh -tt $REMOTE "sudo -S < <(echo ${RTOOLPW}) chown -R ${RTOOLUSER}:${RTOOLUSER}
 echo "Copying ${TOOL} repo files to ${REMOTE}"
 # =========================================
 EXCLUDES=" --exclude '*__pycache__*' --exclude '*.pyc' --exclude '*.swp' "
-echo rsync -av $EXCLUDES ${SCRIPTDIR}/* ${REMOTE}:/opt/${TOOL}
-rsync -av $EXCLUDES ${SCRIPTDIR} ${REMOTE}:/opt/${TOOL}
+rsync -av $EXCLUDES ${SCRIPTDIR} ${REMOTE}:/opt/
 
 echo "Please provide remote sudo password to run install script."
 # ===============================================================
