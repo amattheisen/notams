@@ -132,4 +132,4 @@ systemctl restart nginx
 
 echo Setting up crontab to retrieve notams.
 # =========================================
-su - ${RUSER} -c "crontab -e < /opt/${TOOL}/vagrant/crontab.${RUSER}"
+su - ${RUSER} -c "/bin/crontab -e < /opt/${TOOL}/vagrant/crontab.${RUSER}"
