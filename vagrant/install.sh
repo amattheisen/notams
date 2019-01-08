@@ -11,7 +11,7 @@ usermod -aG wheel ${RUSER}
 
 echo Prepare /opt.
 # ==============
-chown -R ${RUSER}:${RUSER} /opt
+chown -R ${RUSER}:${RUSER} /opt/${TOOL}
 
 echo Install EPEL YUM repo and YUM Packages.
 # ========================
@@ -104,11 +104,12 @@ restorecon -Rv /opt/${TOOL}
 ##    setenforce permissive
 ## </NOTES>
 
-echo Configuring ntpd
-# ===================
-rm /etc/ntp.conf
-ln -sf -T /opt/${TOOL}/vagrant/ntp.conf /etc/ntp.conf
-systemctl restart ntpd
+# TODO: don't change existing NTP installation.  Does this tool even need NTP?
+#echo Configuring ntpd
+## ===================
+#rm /etc/ntp.conf
+#ln -sf -T /opt/${TOOL}/vagrant/ntp.conf /etc/ntp.conf
+#systemctl restart ntpd
 
 echo Setting up Supervisord.
 # ==========================
