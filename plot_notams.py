@@ -1,8 +1,9 @@
-""" plot_notams.py
-Description: Plot NOTAMS on a map.
-Date: 2018-10-04
+"""
+plot_notams.py
+==============
+Plot NOTAMS on a map.
 
-Usage: 
+Usage:
     plot_notams.py [--date DATE] [--init] [--marble|--etopo|--basic] [--infile FILE] [--outfile FILE] [-h]
 
 Options:
@@ -35,9 +36,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import numpy as np
 import os
-from PIL import Image
 import pytz
-import sys
 import gc
 
 
@@ -176,12 +175,12 @@ def make_plot(notams, day, outfile, map_type):
     idents = notams['idents']
     latitudes = notams['latitudes']
     longitudes = notams['longitudes']
-    radii = notams['radii']
+    # radii = notams['radii']
     # Add Circles
     for ii in range(len(idents)):
-       circle_lats, circle_lons = notams['circles'][ii]
-       x, y = map(circle_lons, circle_lats)
-       map.plot(x, y, marker=None, color='red', linewidth=1, zorder=15)
+        circle_lats, circle_lons = notams['circles'][ii]
+        x, y = map(circle_lons, circle_lats)
+        map.plot(x, y, marker=None, color='red', linewidth=1, zorder=15)
     # Add labels
     for ii in range(len(idents)):
         x, y = map(longitudes[ii], latitudes[ii])
@@ -214,8 +213,8 @@ def compute_circles(notams):
     longitudes = notams['longitudes']
     radii = notams['radii']
     for ii in range(len(idents)):
-       circle_lats, circle_lons = compute_circle(latitudes[ii], longitudes[ii], radii[ii])
-       circles.append((circle_lats, circle_lons))
+        circle_lats, circle_lons = compute_circle(latitudes[ii], longitudes[ii], radii[ii])
+        circles.append((circle_lats, circle_lons))
     return circles
 
 

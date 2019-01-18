@@ -12,7 +12,7 @@ Options:
   -h --help           Show this screen.
   --debug             Print verbose debugging output.
   --url URL           Read NOTAMs from a URL.  If not specified, the default URL
-                      is the pilotweb site. 
+                      is the pilotweb site.
   --use-file FILE     Read NOTAMS from FILE instead of from a url.  The default
                       behavior is to read from a url.
   --plotdir DIR       Override the default output dir for plots.
@@ -53,7 +53,7 @@ def main(options):
 
     """
     url = options['--url']
-    plotdir = options['--plotdir']
+    # plotdir = options['--plotdir']
     datadir = options['--datadir']
     use_file = options['--use-file']
 
@@ -79,7 +79,7 @@ def main(options):
             # skip lines that do not contain a notam
             # e.g. "<span> !GPS <b>11/153</b> (KNMH A0027/18)  GPS NAV PRN 18 OUT OF SERVICE 1811191400-1902162359</span>"
             continue
-        
+
         if options['--debug']:
             print('found key:', key, 'with value', value)
         if key not in data:
@@ -125,7 +125,7 @@ def process_html_data(data):
         ident = abbreviate_idents(idents)
         lat, lon = split_latlon(latlon)
         notam = {
-            'ident': abbreviate_idents(idents),
+            'ident': ident,
             'lat': lat,
             'lon': lon,
             'rad': radius,
@@ -144,7 +144,7 @@ def process_html_line(line):
 
     RAW_NOTAM = "															<span> !GPS <b>10/155</b> (KZOA A0758/18)  ZOA NAV GPS (NTC GPS 18-38H) (INCLUDING WAAS, GBAS, AND ADS-B) MAY NOT BE AVBL WI A 270NM RADIUS CENTERED AT 352119N1163405W (HEC339034) FL400-UNL, 221NM RADIUS AT FL250, 148NM RADIUS AT 10000FT, 111NM RADIUS AT 4000FT AGL, 87NM RADIUS AT 50FT AGL. 1810271830-1810272030</span>"
 
-    Returns the list [key, value], 
+    Returns the list [key, value],
         where key is the tuple (max_radius, first_latlon, first_timespan)
         and value is the first ident found.
     """
@@ -238,7 +238,7 @@ def abbreviate_idents(idents):
 
     # Abbreviate suffixes
     suffixes_str = ''
-    for _,g in groupby(enumerate(suffixes), f):
+    for _, g in groupby(enumerate(suffixes), f):
         group = (map(itemgetter(1), g))
         group = list(map(int, group))
         if group[0] == group[-1]:

@@ -37,7 +37,6 @@ Requirements
 """
 # Stantard Imports
 import datetime
-#from flask import Flask, render_template, request
 from flask import Flask, render_template, request, send_from_directory, jsonify
 import os
 
@@ -52,11 +51,10 @@ DATA_DIR = [os.path.dirname(__file__), 'static_notams', 'data']
 
 
 # Setup
-#app = Flask(__name__)
 app = Flask(__name__, static_url_path='')
 
 
-# Views 
+# Views
 @app.route('/notams/static_notams/images/<path:path>')
 def send_image(path):
     return send_from_directory(os.path.join('static_notams', 'images'), path)

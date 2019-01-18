@@ -1,0 +1,1 @@
+.. mdinclude:: ../vagrant/README.md

@@ -61,7 +61,7 @@ def add_notam(yaml_file, ident, lat, lon, rad):
         success = export_notams(yaml_file=yaml_file, notam_list=notam_list)
     else:
         success = True
-    return success    
+    return success
 
 
 def is_unique(notam, notam_list):
@@ -181,27 +181,27 @@ def import_notams(yaml_file):
         for key in NOTAM_KEYS:
             if key not in notam:
                 errors.append(MISSING_REQUIRED_KEY.format(i_th=add_number_suffix(ii), key=key))
-                valid_notam = False 
+                valid_notam = False
         # validate ident
         ident = validate_ident(notam['ident'])
         if ident is None:
             errors.append(INVALID_IDENT.format(i_th=add_number_suffix(ii), ident=notam['ident']))
-            valid_notam = False 
+            valid_notam = False
         # validate latitude
         latitude = validate_lat(lat=notam['lat'].upper())
         if latitude is None:
             errors.append(INVALID_LATITUDE.format(i_th=add_number_suffix(ii), latitude=notam['lat']))
-            valid_notam = False 
+            valid_notam = False
         # validate longitude
         longitude = validate_lon(lon=notam['lon'].upper())
         if longitude is None:
             errors.append(INVALID_LONGITUDE.format(i_th=add_number_suffix(ii), longitude=notam['lon']))
-            valid_notam = False 
+            valid_notam = False
         # validate radius
         radius = validate_radius(r=str(notam['rad']).upper())
         if radius is None:
             errors.append(INVALID_RADIUS.format(i_th=add_number_suffix(ii), radius=notam['rad']))
-            valid_notam = False 
+            valid_notam = False
         if valid_notam:
             notam_list.append(notam)
 

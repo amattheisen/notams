@@ -4,3 +4,8 @@
 vagrant/.vagrant
 .DS_Store
 __pycache__
+.coverage
+.eggs/
+GPS_NOTAMS_Map_tool.egg-info/
+docs/doctrees/
+docs/html/

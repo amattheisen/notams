@@ -8,3 +8,5 @@ pytz
 gunicorn
 grip
 matplotlib==3.0.0
+sphinx
+m2r
