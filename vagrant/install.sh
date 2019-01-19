@@ -86,7 +86,7 @@ restorecon -Rv /opt/conda
 
 echo "Installing conda & pip packages."
 # =====================================
-su - ${RUSER} -c "/opt/conda/bin/conda install --name ${TOOL} -c conda-forge --file /opt/${TOOL}/requirements.conda && /opt/conda/envs/${TOOL}/bin/pip install -q -r /opt/${TOOL}/requirements.pip"
+su - ${RUSER} -c "/opt/conda/bin/conda install -y --name ${TOOL} -c conda-forge --file /opt/${TOOL}/requirements.conda && /opt/conda/envs/${TOOL}/bin/pip install -q -r /opt/${TOOL}/requirements.pip"
 
 echo Preparing SELINUX permissions for gunicorn
 ## ============================================
