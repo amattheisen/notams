@@ -34,6 +34,7 @@ cd ${basedir}/${repo}; git checkout ${notams_branch}; git pull;
 # run tests
 conda create -n $tool_short_name python=3.6 || true;
 cd ${basedir}/${repo}; source activate ${tool_short_name};
+conda install -y --name ${tool_short_name} -c conda-forge --file requirements.conda
 pip install -r requirements.pip;
 pip install -r test_requirements.pip;
 python setup.py test;
